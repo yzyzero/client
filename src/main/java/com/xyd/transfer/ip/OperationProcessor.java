@@ -18,7 +18,7 @@ public abstract class OperationProcessor extends ChannelInboundHandlerAdapter {
 	
 	private Status status = Status.OFFLINE;
 	
-	OperationProcessor(){
+	public OperationProcessor(){
 		this.channel = null;
 		this.code = null;
 		this.regionCode = null;

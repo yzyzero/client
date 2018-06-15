@@ -20,6 +20,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.http.HttpRequestEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.ResourceLeakDetector;
 
 import java.security.MessageDigest;
@@ -38,19 +39,19 @@ public class IMPManager {
 	private int port;
 	private String username;
 	private String password;
-	
 	private boolean startup = true;
+	private int timeout = 30;	//Unit: Second
 	
 //	private boolean heartbeat = false;
 //	private Object obj = new Object();
-	
+
 	private SocketChannel socketChannel;
 	
-	private final static LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+//	private final static LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 
-	public LinkedBlockingQueue<String> getQueue() {
-		return queue;
-	}
+//	public LinkedBlockingQueue<String> getQueue() {
+//		return queue;
+//	}
 
 	public IMPManager(){
 	}
@@ -91,6 +92,18 @@ public class IMPManager {
 		return startup;
 	}
 	
+	public void setStartup(boolean startup) {
+		this.startup = startup;
+	}
+
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
+	}
+	
 //	private static final int READ_IDEL_TIME_OUT = 4; // 读超时
 //	private static final int WRITE_IDEL_TIME_OUT = 5;// 写超时
 //	private static final int ALL_IDEL_TIME_OUT = 7; // 所有超时
@@ -112,8 +125,8 @@ public class IMPManager {
 //										WRITE_IDEL_TIME_OUT, ALL_IDEL_TIME_OUT, TimeUnit.SECONDS)); // 1
 //								pipeline.addLast(new HeartbeatServerHandler()); // 2
 								pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 10, 2, 0, 0));
-								//pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));
 								pipeline.addLast(handler);//3
+								pipeline.addLast(new ReadTimeoutHandler(timeout));
 							}
 						});
 				bootstrap.remoteAddress(host, port);

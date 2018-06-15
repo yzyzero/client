@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.druid.util.StringUtils;
 import com.xyd.transfer.client.IMPManager;
 
 //import cn.tass.yingjgb.YingJGBCALLDLL;
@@ -20,7 +21,7 @@ import com.xyd.transfer.client.IMPManager;
 public class StartupRunner implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
     
-    private int threadCount = 100;
+    private int threadCount = 1;
     
 	@Value("${application.socket.user:server}")
 	private String username;
@@ -34,13 +35,18 @@ public class StartupRunner implements CommandLineRunner {
 	@Value("${application.socket.port:8788}")
 	private int port = 8788;
 	
+	@Value("${application.socket.startup:true}")
+	private boolean startup = true;
+	
     public void startIMPClient(){
     	try {
     		IMPManager client = new IMPManager();
     		client.setHost(host);
     		client.setPort(port);
+    		client.setStartup(startup);
+			System.out.println("IMPClient 连接服务器，主机"+client.getHost()+", 端口"+client.getPort() + ", 是否初始化后启动: " + startup);
+			
     		client.start();
-			System.out.println("IMPClient 连接服务器，主机"+client.getHost()+", 端口"+client.getPort());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,7 +54,18 @@ public class StartupRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		logger.info("Startup Runner ......");
+		if(args.length > 0) {
+			try {
+				if(StringUtils.isNumber(args[0])) {
+					threadCount = Integer.parseInt(args[0]);
+				}else {
+					System.out.println("命令行参数: "+args[0]);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		logger.info("Startup Runner ......threadCount="+threadCount);
 		
 		// TODO 计算数字签名
 //		byte[] hbBuf = {0x01, 0x02, 0x03, 0x04};
