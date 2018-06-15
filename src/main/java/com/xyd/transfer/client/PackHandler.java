@@ -2,6 +2,7 @@ package com.xyd.transfer.client;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +63,8 @@ public class PackHandler extends ChannelInboundHandlerAdapter { // (1)
         try {
         	byte[] req = new byte[buf.readableBytes()];
             buf.readBytes(req);
+            System.out.println(Hex.encodeHexString(req));
+            
 //        	IMPDataPackage pkg = new IMPDataPackage(req);
 //        	int optcode = pkg.getOperateCode();
 //    		String body = pkg.getDataBody();
