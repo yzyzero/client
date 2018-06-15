@@ -5,6 +5,14 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.xyd.transfer.ip.PackEncodeException;
+import com.xyd.transfer.ip.datapack.ClientHeartbeat;
+import com.xyd.transfer.ip.datapack.OperationType;
+import com.xyd.transfer.ip.datapack.RawPack;
+import com.xyd.transfer.ip.datapack.ResponsePack;
+import com.xyd.transfer.ip.datapack.SendPack;
+import com.xyd.transfer.ip.datapack.Status;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -171,13 +179,37 @@ public class ClientService {
 	}
 	
 	public void afterConnected(){
-
+		for(int i=0;i<1;i++) {
+			sendHeartbeat();
+			try {
+				TimeUnit.MILLISECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void delay(){
 		try {
 			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendHeartbeat() {
+		int sessionID = 1;
+		String source = "069951010700100101";
+		String[] targets = {"010151010000000001"};
+		byte first = 1;
+		String physicalAddress = "170211010002";
+		
+		SendPack pack = new ClientHeartbeat(sessionID, source, targets, Status.IDLE, first, physicalAddress);
+		try {
+			ByteBuf msg = pack.toBuffer();
+			socketChannel.writeAndFlush(msg);
+		} catch (PackEncodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

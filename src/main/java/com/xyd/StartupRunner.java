@@ -44,7 +44,7 @@ public class StartupRunner implements CommandLineRunner {
     		client.setHost(host);
     		client.setPort(port);
     		client.setStartup(startup);
-			System.out.println("IMPClient 连接服务器，主机"+client.getHost()+", 端口"+client.getPort() + ", 是否初始化后启动: " + startup);
+			System.out.println("Client 连接服务器，主机"+client.getHost()+", 端口"+client.getPort() + ", 是否初始化后启动: " + startup);
 			
     		client.start();
 		} catch (Exception e) {

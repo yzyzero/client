@@ -61,7 +61,8 @@ public abstract class SendPack extends BasePack {
 				System.arraycopy(bSignature, 10, signature, 0, signature.length);
 				setSignature(signature);
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
+				System.out.println("签名错误");
 			}
 			
 			// 验证数据
