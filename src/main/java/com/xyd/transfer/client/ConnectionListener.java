@@ -15,12 +15,12 @@ import io.netty.channel.EventLoop;
  * @version 2.0 Create at 2018-1-15
  *
  */
-public class IMPConnectionListener implements ChannelFutureListener {
+public class ConnectionListener implements ChannelFutureListener {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private IMPManager client;
+	private ClientService client;
 
-	public IMPConnectionListener(IMPManager client) {
+	public ConnectionListener(ClientService client) {
 		this.client = client;
 	}
 

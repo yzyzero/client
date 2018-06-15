@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangzy QQ51511793
  * @version 2.0 Create at 2018-1-15
  */
-public class IMPManager {
+public class ClientService {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private String host;
@@ -53,7 +53,7 @@ public class IMPManager {
 //		return queue;
 //	}
 
-	public IMPManager(){
+	public ClientService(){
 	}
 	
 	public String getHost() {
@@ -112,7 +112,7 @@ public class IMPManager {
 	public Bootstrap createBootstrap(Bootstrap bootstrap, EventLoopGroup eventLoop) {
 		if (bootstrap != null) {
 			try {
-				IMPClientHandler handler = new IMPClientHandler(this);
+				PackHandler handler = new PackHandler(this);
 				
 				bootstrap.group(group).channel(NioSocketChannel.class)
 						.option(ChannelOption.TCP_NODELAY, true)
@@ -134,7 +134,7 @@ public class IMPManager {
 				//
 				ChannelFuture future = bootstrap.connect();
 				logger.info("client connect to host:{}, port:{}", host, port);
-				future.addListener(new IMPConnectionListener(this));
+				future.addListener(new ConnectionListener(this));
 				future.sync();
 				if (future.isSuccess()) {
 					socketChannel = (SocketChannel) future.channel();

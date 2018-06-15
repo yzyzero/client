@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.util.StringUtils;
-import com.xyd.transfer.client.IMPManager;
+import com.xyd.transfer.client.ClientService;
 
 //import cn.tass.yingjgb.YingJGBCALLDLL;
 //import org.apache.commons.codec.binary.Base64;
@@ -40,7 +40,7 @@ public class StartupRunner implements CommandLineRunner {
 	
     public void startIMPClient(){
     	try {
-    		IMPManager client = new IMPManager();
+    		ClientService client = new ClientService();
     		client.setHost(host);
     		client.setPort(port);
     		client.setStartup(startup);

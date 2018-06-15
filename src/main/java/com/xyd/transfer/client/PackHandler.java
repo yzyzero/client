@@ -17,12 +17,12 @@ import io.netty.util.ReferenceCountUtil;
  * @author yangzy QQ51511793
  * @version 2.0 Create at 2018-1-15
  */
-public class IMPClientHandler extends ChannelInboundHandlerAdapter { // (1)
+public class PackHandler extends ChannelInboundHandlerAdapter { // (1)
     private Logger logger = LoggerFactory.getLogger(getClass());
     
-    private IMPManager client;
+    private ClientService client;
     
-    public IMPClientHandler(IMPManager client){
+    public PackHandler(ClientService client){
     	this.client = client;
     }
     
