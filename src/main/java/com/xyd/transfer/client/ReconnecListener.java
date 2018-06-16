@@ -15,12 +15,12 @@ import io.netty.channel.EventLoop;
  * @version 2.0 Create at 2018-1-15
  *
  */
-public class ConnectionListener implements ChannelFutureListener {
+public class ReconnecListener implements ChannelFutureListener {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private ClientService client;
 
-	public ConnectionListener(ClientService client) {
+	public ReconnecListener(ClientService client) {
 		this.client = client;
 	}
 

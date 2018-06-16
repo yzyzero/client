@@ -142,7 +142,7 @@ public class ClientService {
 				//
 				ChannelFuture future = bootstrap.connect();
 				logger.info("client connect to host:{}, port:{}", host, port);
-				future.addListener(new ConnectionListener(this));
+				future.addListener(new ReconnecListener(this));
 				future.sync();
 				if (future.isSuccess()) {
 					socketChannel = (SocketChannel) future.channel();
