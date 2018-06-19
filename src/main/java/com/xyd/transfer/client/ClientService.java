@@ -132,7 +132,7 @@ public class ClientService {
 //								pipeline.addLast(new IdleStateHandler(READ_IDEL_TIME_OUT,
 //										WRITE_IDEL_TIME_OUT, ALL_IDEL_TIME_OUT, TimeUnit.SECONDS)); // 1
 //								pipeline.addLast(new HeartbeatServerHandler()); // 2
-								pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 10, 2, 0, 0));
+								pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 10, 2, -12, 0));
 								pipeline.addLast(handler);//3
 								pipeline.addLast(new ReadTimeoutHandler(timeout));
 							}
@@ -179,7 +179,7 @@ public class ClientService {
 	}
 	
 	public void afterConnected(){
-		for(int i=0;i<1;i++) {
+		for(int i=0;i<10000;i++) {
 			sendHeartbeat();
 			try {
 				TimeUnit.MILLISECONDS.sleep(1);
