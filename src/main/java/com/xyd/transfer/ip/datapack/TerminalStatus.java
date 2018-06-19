@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.apache.commons.codec.binary.Hex;
 
-import com.xyd.model.IPInfo;
-import com.xyd.model.ServiceInfo;
+import com.xyd.utils.IPInfo;
+import com.xyd.utils.ServiceInfo;
 
 import io.netty.buffer.ByteBuf;
 

@@ -1,9 +1,7 @@
-package com.xyd.model;
+package com.xyd.utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-import com.xyd.utils.IPAddress;
 
 import io.netty.buffer.ByteBuf;
 
