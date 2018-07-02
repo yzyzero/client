@@ -34,7 +34,7 @@ public class ReconnecListener implements ChannelFutureListener {
 				public void run() {
 					client.createBootstrap(new Bootstrap(), loop);
 				}
-			}, 1L, TimeUnit.SECONDS);
+			}, 5L, TimeUnit.SECONDS);
 		}
 	}
 }

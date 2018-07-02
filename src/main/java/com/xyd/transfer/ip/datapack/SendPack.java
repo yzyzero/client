@@ -4,6 +4,8 @@ import org.apache.commons.codec.binary.Hex;
 
 import com.xyd.transfer.ip.PackEncodeException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import cn.tass.yingjgb.YingJGBCALLDLL;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -11,6 +13,7 @@ import io.netty.util.ReferenceCountUtil;
 
 public abstract class SendPack extends BasePack {
 	private static final String ZERO_MASK = "000000000000000000";
+	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	
 	public ByteBuf toBuffer() throws PackEncodeException {
 		ByteBuf buf = Unpooled.buffer(54);
@@ -62,7 +65,8 @@ public abstract class SendPack extends BasePack {
 				setSignature(signature);
 			} catch (Exception e) {
 				//e.printStackTrace();
-				System.out.println("签名错误");
+				logger.info("签名错误");
+				//System.out.println("签名错误");
 			}
 			
 			// 验证数据

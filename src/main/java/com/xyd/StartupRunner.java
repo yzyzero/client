@@ -38,12 +38,24 @@ public class StartupRunner implements CommandLineRunner {
 	@Value("${application.socket.startup:true}")
 	private boolean startup = true;
 	
+	@Value("${application.socket.source}")
+	private String source;
+	
+	@Value("${application.socket.targets}")
+	private String targets;
+	
+	@Value("${application.socket.physicalAddress}")
+	private String physicalAddress;
+	
     public void startIMPClient(){
     	try {
     		ClientService client = new ClientService();
     		client.setHost(host);
     		client.setPort(port);
     		client.setStartup(startup);
+    		client.setSource(source.replace('\'', ' ').trim());
+    		client.setTargets(targets.split(","));
+    		client.setPhysicalAddress(physicalAddress.replace('\'', ' ').trim());
 			System.out.println("Client 连接服务器，主机"+client.getHost()+", 端口"+client.getPort() + ", 是否初始化后启动: " + startup);
 			
     		client.start();
